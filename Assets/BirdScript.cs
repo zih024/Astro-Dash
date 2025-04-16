@@ -18,15 +18,19 @@ public class BirdScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && birdIsAlive) {
              myRigidbody.linearVelocity = Vector2.up * flapStrength;
         }
-        if (transform.position.y < -18)
+        if (transform.position.y < -18 || transform.position.y > 13)
         {
             logic.gameOver();
             birdIsAlive = false;
         }
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        logic.gameOver();
-        birdIsAlive = false;
+        Debug.Log("Collision with: " + collision.gameObject.name);
+        if (collision.gameObject.tag == "Pipe")
+        {
+            logic.gameOver();
+            birdIsAlive = false;
+        }
     }
 }
